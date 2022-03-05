@@ -10,9 +10,10 @@ export const data = {
       rating: 4.5,
       numReviews: 10,
       description: "high quality product",
+      countInStock: 10,
     },
     {
-      _id: "12",
+      _id: "2",
       name: "Adidas Slim Shirt",
       category: "Shirts",
       image: "/image/p2.jpg",
@@ -21,6 +22,7 @@ export const data = {
       rating: 4,
       numReviews: 10,
       description: "high quality product",
+      countInStock: 20,
     },
     {
       _id: "3",
@@ -32,6 +34,7 @@ export const data = {
       rating: 4.8,
       numReviews: 17,
       description: "high quality product",
+      countInStock: 0,
     },
     {
       _id: "4",
@@ -43,6 +46,7 @@ export const data = {
       rating: 4.5,
       numReviews: 14,
       description: "high quality product",
+      countInStock: 15,
     },
     {
       _id: "5",
@@ -51,9 +55,10 @@ export const data = {
       image: "/image/p5.jpg",
       price: 65,
       brand: "Puma",
-      rating: 4.5,
+      rating: 3,
       numReviews: 14,
       description: "high quality product",
+      countInStock: 5,
     },
     {
       _id: "6",
@@ -65,6 +70,7 @@ export const data = {
       rating: 4.5,
       numReviews: 15,
       description: "high quality product",
+      countInStock: 12,
     },
   ],
 };

@@ -2,7 +2,6 @@ html {
   font-size: 62.5%; /* 16px x 62.5% = 10px = 1rem */
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   height: 100vh;
@@ -11,7 +10,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 #root {
   height: 100%;
 }
@@ -25,17 +23,14 @@ body {
   grid-template-rows: 5rem 1fr 5rem;
   height: 100%;
 }
-
 header {
   grid-area: header;
   background-color: #203040;
 }
-
 main {
   grid-area: main;
   padding: 1rem;
 }
-
 footer {
   grid-area: footer;
   background-color: #203040;
@@ -52,12 +47,40 @@ h2 {
   font-size: 1.6rem;
   padding: 1rem 0;
 }
-
 a {
   text-decoration: none;
 }
 a:hover {
   color: #ff8000;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+li {
+  margin-top: 1rem;
+}
+
+button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem #a4a4a4 solid;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+button:hover {
+  border: 0.1rem solid #404040;
+}
+button.primary {
+  background-color: #f0c040;
+}
+button.block {
+  width: 100%;
 }
 
 /*  Header */
@@ -65,20 +88,26 @@ header a {
   color: #ffffff;
   padding: 1rem;
 }
-
 a.brand {
   color: #fff;
   font-size: 3rem;
   font-weight: bold;
 }
-
 .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
-
+.row.top {
+  align-items: flex-start;
+}
+.col-1 {
+  flex: 1 1 25rem;
+}
+.col-2 {
+  flex: 2 1 50rem;
+}
 .row.center {
   justify-content: center;
 }
@@ -88,9 +117,11 @@ a.brand {
 img {
   border-radius: 0.5rem;
 }
-
 img.medium {
   max-width: 29rem;
+  width: 100%;
+}
+img.large {
   width: 100%;
 }
 
@@ -101,15 +132,12 @@ img.medium {
   border-radius: 0.5rem;
   margin: 1rem;
 }
-
 .card-body {
   padding: 1rem;
 }
-
 .card-body > * {
   margin-bottom: 0.5rem;
 }
-
 .price {
   font-size: 2rem;
 }
@@ -118,4 +146,15 @@ img.medium {
 .rating span {
   color: #f0c040;
   margin: 0.1rem;
+}
+.rating span:last-child {
+  color: #404040;
+}
+
+/* Alert */
+.success {
+  color: #20a020;
+}
+.error {
+  color: #a02020;
 }
