@@ -19,5 +19,9 @@
   "homepage": "https://github.com/akhi-bot/Amazon#readme",
   "dependencies": {
     "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.3"
   }
 }
