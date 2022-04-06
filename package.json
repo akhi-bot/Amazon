@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/akhi-bot/Amazon#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.2.10"
   },
   "devDependencies": {
     "eslint": "^8.10.0",

@@ -1,7 +1,21 @@
-export const data = {
+import bcrypt from "bcrypt";
+const data = {
+  users: [
+    {
+      name: "Eleanor Shellstrop",
+      email: "admin@example.com",
+      password: bcrypt.hashSync("1234", 8),
+      isAdmin: true,
+    },
+    {
+      name: "Chidi Anagonye",
+      email: "user@example.com",
+      password: bcrypt.hashSync("1234", 8),
+      isAdmin: true,
+    },
+  ],
   products: [
     {
-      _id: "1",
       name: "Nike Slim Shirt",
       category: "Shirts",
       image: "/image/p1.jpg",
@@ -13,7 +27,6 @@ export const data = {
       countInStock: 10,
     },
     {
-      _id: "2",
       name: "Adidas Slim Shirt",
       category: "Shirts",
       image: "/image/p2.jpg",
@@ -25,7 +38,6 @@ export const data = {
       countInStock: 20,
     },
     {
-      _id: "3",
       name: "Lacoste Free Shirt",
       category: "Shirts",
       image: "/image/p3.jpg",
@@ -37,7 +49,6 @@ export const data = {
       countInStock: 0,
     },
     {
-      _id: "4",
       name: "Nike Slim Pant",
       category: "Pants",
       image: "/image/p4.jpg",
@@ -49,7 +60,6 @@ export const data = {
       countInStock: 15,
     },
     {
-      _id: "5",
       name: "Puma Slim Pant",
       category: "Pants",
       image: "/image/p5.jpg",
@@ -61,7 +71,6 @@ export const data = {
       countInStock: 5,
     },
     {
-      _id: "6",
       name: "Adidas Slim Pant",
       category: "Pants",
       image: "/image/p6.jpg",
@@ -74,3 +83,5 @@ export const data = {
     },
   ],
 };
+
+export default data;
