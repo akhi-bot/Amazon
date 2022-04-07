@@ -3,6 +3,7 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
+import SignInScreen from "./screens/SignInScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -34,6 +35,7 @@ function App() {
               <Route index element={<CartScreen />} />
               <Route path=":id" element={<CartScreen />} />
             </Route>
+            <Route path="/signin" element={<SignInScreen />} />
           </Routes>
         </main>
         <footer className="row center">All right reserved</footer>
