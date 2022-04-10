@@ -4,6 +4,7 @@ import { signOut } from "./redux/actions/userAction";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 import SignInScreen from "./screens/SignInScreen";
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
               <Route path=":id" element={<CartScreen />} />
             </Route>
             <Route path="/signin" element={<SignInScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
           </Routes>
         </main>
         <footer className="row center">All right reserved</footer>
