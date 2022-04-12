@@ -10,12 +10,12 @@ const PlaceOrderScreen = () => {
   const navigate = useNavigate();
 
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-  const itemsPrice = toPrice(
+  cart.itemsPrice = toPrice(
     cartItems.reduce((acc, c) => acc + c.qty * c.price, 0)
   );
-  const shippingPrice = itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  const taxPrice = toPrice(0.15 * itemsPrice);
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
+  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   useEffect(() => {
     if (!paymentMethod) {
@@ -94,19 +94,19 @@ const PlaceOrderScreen = () => {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${itemsPrice.toFixed(2)}</div>
+                  <div>${cart.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${shippingPrice.toFixed(2)}</div>
+                  <div>${cart.shippingPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${taxPrice.toFixed(2)}</div>
+                  <div>${cart.taxPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
@@ -115,7 +115,7 @@ const PlaceOrderScreen = () => {
                     <strong>Order Total</strong>
                   </div>
                   <div>
-                    <strong>${totalPrice.toFixed(2)}</strong>
+                    <strong>${cart.totalPrice.toFixed(2)}</strong>
                   </div>
                 </div>
               </li>
