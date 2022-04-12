@@ -5,7 +5,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { savePaymentMethod } from "../redux/actions/cartAction";
 
 const PaymentMethodScreen = () => {
-  const [paymentMethod, setPaymentMethod] = useState("paypal");
+  const [paymentMethod, setPaymentMethod] = useState("Paypal");
   const { shippingAddress } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
