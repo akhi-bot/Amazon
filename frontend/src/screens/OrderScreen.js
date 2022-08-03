@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
@@ -9,12 +11,39 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const { id: orderId } = useParams();
 
+  const [sdkReady, setSdkReady] = useState(false);
+
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
   useEffect(() => {
-    dispatch(detailsOrder(orderId));
-  }, [orderId, dispatch]);
+    const addPaypalScript = async () => {
+      const { data } = await axios.get("/api/config/paypal");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${"sb" || data}`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+    if (!order?._id) {
+      dispatch(detailsOrder(orderId));
+    } else {
+      if (!order?.isPaid) {
+        if (!window.paypal) {
+          addPaypalScript();
+        } else {
+          setSdkReady(true);
+        }
+      }
+    }
+  }, [orderId, dispatch, sdkReady, order]);
+
+  const successPaypalHandler = () => {
+    // TODO: dispatch pay order
+  };
 
   return loading ? (
     <LoadingBox />
@@ -127,6 +156,18 @@ const OrderScreen = () => {
                   </div>
                 </div>
               </li>
+              {!order.isPaid && (
+                <li>
+                  {!sdkReady ? (
+                    <LoadingBox></LoadingBox>
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={successPaypalHandler}
+                    ></PayPalButton>
+                  )}
+                </li>
+              )}
             </ul>
           </div>
         </div>
