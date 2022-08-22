@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import { signOut } from "./redux/actions/userAction";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -77,7 +78,9 @@ function App() {
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/order-history" element={<OrderHistoryScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/profile" element={<ProfileScreen />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/profile" element={<ProfileScreen />} />
+            </Route>
           </Routes>
         </main>
         <footer className="row center">All right reserved</footer>
