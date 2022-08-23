@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import { signOut } from "./redux/actions/userAction";
 import CartScreen from "./screens/CartScreen";
@@ -8,6 +9,7 @@ import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import OrderScreen from "./screens/OrderScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import ProductListScreen from "./screens/ProductListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -71,7 +73,7 @@ function App() {
                     <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
-                    <Link to="/products-list">Products</Link>
+                    <Link to="/product-list">Products</Link>
                   </li>
                   <li>
                     <Link to="/order-list">Orders</Link>
@@ -101,6 +103,9 @@ function App() {
             <Route path="/register" element={<RegisterScreen />} />
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<ProfileScreen />} />
+            </Route>
+            <Route element={<AdminRoute />}>
+              <Route path="/product-list" element={<ProductListScreen />} />
             </Route>
           </Routes>
         </main>
