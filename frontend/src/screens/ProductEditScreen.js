@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { productDetails } from "../redux/actions/productAction";
+import { productDetails, updateProduct } from "../redux/actions/productAction";
+import { PRODUCT_UPDATE_RESET } from "../redux/constants/productConstants";
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -18,9 +20,20 @@ const ProductEditScreen = () => {
   const [description, setDescription] = useState("");
 
   const detailProduct = useSelector((state) => state.productDetails);
-  const { error, loading, product } = detailProduct;
+  const { loading, product, error } = detailProduct;
+
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    success: successUpdate,
+    error: errorUpdate,
+  } = productUpdate;
   useEffect(() => {
-    if (!product || product?._id !== productId) {
+    if (successUpdate) {
+      navigate("/product-list");
+    }
+    if (!product || product?._id !== productId || successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(productDetails(productId));
     } else {
       setName(product.name);
@@ -31,11 +44,22 @@ const ProductEditScreen = () => {
       setBrand(product.brand);
       setDescription(product.description);
     }
-  }, [dispatch, productId, product]);
+  }, [dispatch, productId, product, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // todo: dispatch update product
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        category,
+        brand,
+        countInStock,
+        description,
+      })
+    );
   };
 
   return (
@@ -44,6 +68,8 @@ const ProductEditScreen = () => {
         <div>
           <h1>Edit Product {productId}</h1>
         </div>
+        {loadingUpdate && <LoadingBox></LoadingBox>}
+        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (

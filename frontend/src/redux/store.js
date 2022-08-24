@@ -11,6 +11,7 @@ import {
   productCreateReducers,
   productDetailsReducers,
   productListReducer,
+  productUpdateReducer,
 } from "./reducers/productReducers";
 import {
   userDetailsReducer,
@@ -37,18 +38,23 @@ const initialState = {
 };
 
 const reducer = combineReducers({
+  // product reducers
   productList: productListReducer,
   productDetails: productDetailsReducers,
+  productCreate: productCreateReducers,
+  productUpdate: productUpdateReducer,
+  //cart reducers
   cart: cartReducers,
+  // user reducers
   userSignIn: userSignInReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+  // order reducers
   orderCreate: orderCreateReducers,
   orderDetails: orderDetailsReducers,
   orderPay: orderPayReducer,
   orderMineList: orderMineListReducer,
-  userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
-  productCreate: productCreateReducers,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
