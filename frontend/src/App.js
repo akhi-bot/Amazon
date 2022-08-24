@@ -9,6 +9,7 @@ import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import OrderScreen from "./screens/OrderScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -89,7 +90,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
-            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/product/:id">
+              <Route index element={<ProductScreen />} />
+              <Route path="edit" element={<ProductEditScreen />} />
+            </Route>
             <Route path="/cart">
               <Route index element={<CartScreen />} />
               <Route path=":id" element={<CartScreen />} />
