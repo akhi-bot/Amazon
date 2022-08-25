@@ -42,7 +42,7 @@ const orderSchema = new Schema(
     delivered: { type: Date },
   },
   {
-    timestamp: true,
+    timestamps: true,
   }
 );
 

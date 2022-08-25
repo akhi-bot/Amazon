@@ -6,6 +6,7 @@ import { signOut } from "./redux/actions/userAction";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 import OrderScreen from "./screens/OrderScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
@@ -110,6 +111,7 @@ function App() {
             </Route>
             <Route element={<AdminRoute />}>
               <Route path="/product-list" element={<ProductListScreen />} />
+              <Route path="/order-list" element={<OrderListScreen />} />
             </Route>
           </Routes>
         </main>
