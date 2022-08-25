@@ -50,7 +50,7 @@ const ProductListScreen = () => {
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
-        <MessageBox></MessageBox>
+        <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <table className="table">
           <thead>
