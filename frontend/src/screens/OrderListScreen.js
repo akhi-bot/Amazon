@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { listOrders } from "../redux/actions/orderAction";
+import { deleteOrder, listOrders } from "../redux/actions/orderAction";
+import { ORDER_DELETE_RESET } from "../redux/constants/orderConstants";
 
 const OrderListScreen = () => {
   const dispatch = useDispatch();
@@ -11,17 +12,32 @@ const OrderListScreen = () => {
 
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
+
+  const orderDelete = useSelector((state) => state.orderDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = orderDelete;
   useEffect(() => {
+    if (successDelete) {
+      dispatch({ type: ORDER_DELETE_RESET });
+    }
     dispatch(listOrders());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
 
   const deleteHandler = (order) => {
-    // todo: delete handler
+    console.log(order._id);
+    if (window.confirm("Are you sure Delete?")) {
+      dispatch(deleteOrder(order._id));
+    }
   };
 
   return (
     <div>
       <h1>Orders</h1>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -64,7 +80,7 @@ const OrderListScreen = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={deleteHandler(order)}
+                    onClick={() => deleteHandler(order)}
                     className="small"
                   >
                     Delete
