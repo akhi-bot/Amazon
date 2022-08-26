@@ -164,7 +164,7 @@ const ProductEditScreen = () => {
               />
             </div>
             <div>
-              <label htmlFor="countInStock">Brand</label>
+              <label htmlFor="countInStock">Count In Stock</label>
               <input
                 type="text"
                 id="countInStock"

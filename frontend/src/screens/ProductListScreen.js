@@ -2,9 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { createProduct, listProducts } from "../redux/actions/productAction";
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from "../redux/actions/productAction";
 import { useNavigate } from "react-router-dom";
-import { PRODUCT_CREATE_RESET } from "../redux/constants/productConstants";
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_DELETE_RESET,
+} from "../redux/constants/productConstants";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -21,16 +28,28 @@ const ProductListScreen = () => {
     success: successCreate,
   } = productCreate;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       navigate(`/product/${createdProduct?._id}/edit`);
     }
+    if (successDelete) {
+      dispatch({ type: PRODUCT_DELETE_RESET });
+    }
     dispatch(listProducts());
-  }, [dispatch, successCreate, createdProduct?._id, navigate]);
+  }, [dispatch, successCreate, createdProduct?._id, navigate, successDelete]);
 
-  const deleteHandler = () => {
-    // Todo: dispatch delete handler
+  const deleteHandler = (product) => {
+    if (window.confirm("Are You Sure to Delete")) {
+      dispatch(deleteProduct(product._id));
+    }
   };
 
   const createHandler = () => {
@@ -45,6 +64,9 @@ const ProductListScreen = () => {
           Create Product
         </button>
       </div>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+
       {loadingCreate && <LoadingBox></LoadingBox>}
       {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
