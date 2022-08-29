@@ -23,9 +23,15 @@ app.use("/api/config/paypal", (req, res) => {
 });
 const _dirname = path.resolve();
 app.use("/uploads", express.static(path.join(_dirname, "/uploads")));
-app.get("/", (req, res) => {
-  res.send("Server is ready");
-});
+app.use(express.static(path.join(_dirname, "/frontend/build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(_dirname, "/frontend/build/index.html"))
+);
+
+// rather then showing homepage we will show react frontend
+// app.get("/", (req, res) => {
+//   res.send("Server is ready");
+// });
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
