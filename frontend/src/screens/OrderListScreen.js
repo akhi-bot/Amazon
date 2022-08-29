@@ -27,7 +27,6 @@ const OrderListScreen = () => {
   }, [dispatch, successDelete]);
 
   const deleteHandler = (order) => {
-    console.log(order._id);
     if (window.confirm("Are you sure Delete?")) {
       dispatch(deleteOrder(order._id));
     }
