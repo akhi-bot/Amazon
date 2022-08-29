@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Command for heroku deploy
+
+1. heroku login
+   2.heroku apps:create akhi-bot-my-amazon-app
+   3.add env variable in heroku " heroku config:set MONGODB_URL="mongodb:srv..."
+   " and "heroku config:set SKIP_PREFLIGHT_CHECK=true
+   "
+   4.git push heroku
+   5.serve frontend build folder to to server.js
