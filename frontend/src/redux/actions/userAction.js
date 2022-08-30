@@ -1,6 +1,9 @@
 import Axios from "axios";
 import axios from "../../../node_modules/axios/index";
 import {
+  USER_DELETE_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
   USER_DETAILS_FAILURE,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
@@ -119,7 +122,6 @@ export const listUser = () => async (dispatch, getState) => {
     userSignIn: { userInfo },
   } = getState();
   try {
-    console.log(userInfo.token);
     const { data } = await axios.get("/api/users", {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
@@ -127,6 +129,30 @@ export const listUser = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_LIST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: USER_DELETE_REQUEST, payload: userId });
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+  console.log(userInfo.token);
+  try {
+    const { data } = await axios.delete(`/api/users/${userId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log(data);
+    dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+  } catch (error) {
+    console.log({ error });
+    dispatch({
+      type: USER_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

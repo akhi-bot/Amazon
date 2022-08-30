@@ -173,7 +173,6 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
   const {
     userSignIn: { userInfo },
   } = getState();
-  console.log(orderId);
   try {
     const { data } = await axios.put(
       `/api/orders/${orderId}/deliver`,
@@ -182,7 +181,6 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
     );
-    console.log(data);
     dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
   } catch (error) {
     const message =
