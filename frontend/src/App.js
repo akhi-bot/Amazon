@@ -17,6 +17,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SignInScreen from "./screens/SignInScreen";
+import UserEditScreen from "./screens/UserEditScreen";
 import UserListScreen from "./screens/UserListScreen";
 
 function App() {
@@ -111,6 +112,7 @@ function App() {
               <Route path="/profile" element={<ProfileScreen />} />
             </Route>
             <Route element={<AdminRoute />}>
+              <Route path="/user/:id/edit" element={<UserEditScreen />} />
               <Route path="/product-list" element={<ProductListScreen />} />
               <Route path="/order-list" element={<OrderListScreen />} />
               <Route path="/user-list" element={<UserListScreen />} />
