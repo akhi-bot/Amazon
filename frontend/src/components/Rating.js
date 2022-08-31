@@ -5,7 +5,6 @@ const Rating = (props) => {
   return (
     <div className="rating">
       <span>
-        {" "}
         <i
           className={
             rating >= 1
@@ -14,10 +13,9 @@ const Rating = (props) => {
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>{" "}
+        ></i>
       </span>
       <span>
-        {" "}
         <i
           className={
             rating >= 2
@@ -26,10 +24,9 @@ const Rating = (props) => {
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>{" "}
+        ></i>
       </span>
       <span>
-        {" "}
         <i
           className={
             rating >= 3
@@ -38,10 +35,9 @@ const Rating = (props) => {
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>{" "}
+        ></i>
       </span>
       <span>
-        {" "}
         <i
           className={
             rating >= 4
@@ -50,10 +46,9 @@ const Rating = (props) => {
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>{" "}
+        ></i>
       </span>
       <span>
-        {" "}
         <i
           className={
             rating >= 5
@@ -62,7 +57,7 @@ const Rating = (props) => {
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>{" "}
+        ></i>
       </span>
       <span>{`${numReviews} reviews`}</span>
     </div>

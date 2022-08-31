@@ -1,22 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
+import { Card, Button } from "react-bootstrap";
 const Product = (props) => {
   const { product } = props;
   return (
-    <div className="product" key={product._id}>
+    <Card>
       <Link to={`product/${product._id}`}>
-        <img className="medium" src={product.image} alt={product.name} />
+        <img className="card-img-top" src={product.image} alt={product.name} />
       </Link>
-      <div className="product-info">
+      <Card.Body>
         <Link to={`product/${product._id}`}>
-          <h2>{product.name}</h2>
+          <Card.Title>{product.name}</Card.Title>
         </Link>
+        <Card.Text>${product.price}</Card.Text>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <div className="price">${product.price}</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
+        <Button>Add to Cart</Button>
+      </Card.Body>
+    </Card>
   );
 };
 

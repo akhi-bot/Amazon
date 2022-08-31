@@ -1,11 +1,11 @@
 html {
-  font-size: 62.5%; /* 16px x 62.5% = 10px = 1rem */
+  /* font-size: 62.5%; 16px x 62.5% = 10px = 1rem */
   box-sizing: border-box;
 }
 body {
   margin: 0;
   height: 100vh;
-  font-size: 1.6rem;
+  /* font-size: 1.6rem; */
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -23,10 +23,10 @@ body {
   grid-template-rows: 5rem 1fr 5rem;
   height: 100%;
 }
-header {
+/* header {
   grid-area: header;
   background-color: #203040;
-}
+} */
 main {
   flex: 1;
 }
@@ -157,6 +157,10 @@ img.large {
 .site-container {
   min-height: 100vh;
 }
+.btn-primary {
+  background-color: #f0c040;
+  color: #000;
+}
 
 /* products */
 .products {
@@ -196,7 +200,7 @@ img.large {
 
 /* Rating */
 .rating span {
-  color: #f0c040;
+  color: #ffc000;
   margin: 0.1rem;
 }
 .rating span:last-child {
