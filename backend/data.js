@@ -41,6 +41,7 @@ const data = {
   products: [
     {
       name: "Nike Slim Shirt",
+      slug: "nike-slim-shirt",
       category: "Shirts",
       image: "/image/p1.jpg",
       price: 120,
@@ -52,6 +53,7 @@ const data = {
     },
     {
       name: "Adidas Slim Shirt",
+      slug: "adidas-slim-shirt",
       category: "Shirts",
       image: "/image/p2.jpg",
       price: 100,
@@ -63,6 +65,7 @@ const data = {
     },
     {
       name: "Lacoste Free Shirt",
+      slug: "lacoste-free-shirt",
       category: "Shirts",
       image: "/image/p3.jpg",
       price: 220,
@@ -74,6 +77,7 @@ const data = {
     },
     {
       name: "Nike Slim Pant",
+      slug: "nike-slim-pant",
       category: "Pants",
       image: "/image/p4.jpg",
       price: 78,
@@ -85,6 +89,7 @@ const data = {
     },
     {
       name: "Puma Slim Pant",
+      slug: "puma-slim-pant",
       category: "Pants",
       image: "/image/p5.jpg",
       price: 65,
@@ -96,6 +101,7 @@ const data = {
     },
     {
       name: "Adidas Slim Pant",
+      slug: "adidas-slim-pant",
       category: "Pants",
       image: "/image/p6.jpg",
       price: 139,

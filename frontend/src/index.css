@@ -28,14 +28,13 @@ header {
   background-color: #203040;
 }
 main {
-  grid-area: main;
-  padding: 1rem;
+  flex: 1;
 }
-footer {
+/* footer {
   grid-area: footer;
   background-color: #203040;
   color: #fff;
-}
+} */
 
 /*  Common */
 
@@ -98,7 +97,7 @@ button.small {
 }
 
 /*  Header */
-header a {
+/* header a {
   color: #ffffff;
   padding: 1rem;
 }
@@ -106,7 +105,7 @@ a.brand {
   color: #fff;
   font-size: 3rem;
   font-weight: bold;
-}
+} */
 
 .badge {
   background-color: #f02020;
@@ -153,6 +152,29 @@ img.small {
 }
 img.large {
   width: 100%;
+}
+
+.site-container {
+  min-height: 100vh;
+}
+
+/* products */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product {
+  border: 1px #404040 solid;
+  margin: 1rem;
+}
+.product img {
+  width: 100%;
+  max-width: 400px;
+}
+.product-info {
+  padding: 1rem;
 }
 
 /*  Card */

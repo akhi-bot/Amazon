@@ -20,7 +20,7 @@ const HomeScreen = () => {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="row center">
+        <div className="products">
           {products.map((product) => (
             <Product product={product} key={product._id} />
           ))}
