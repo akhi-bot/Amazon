@@ -32,6 +32,15 @@ productRouter.get(
       : res.status(404).send({ message: "Product Not Found" });
   })
 );
+// productRouter.get(
+//   " slug/:slug",
+//   expressAsyncHandler(async (req, res) => {
+//     const product = data.products.find(x => x.slug === req.params.slug)
+//     product
+//       ? res.send(product)
+//       : res.status(404).send({ message: "Product Not Found" });
+//   })
+// );
 
 productRouter.post(
   "/",

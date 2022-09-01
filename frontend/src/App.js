@@ -93,66 +93,9 @@ function App() {
               )}
             </Container>
           </Navbar>
-          {/* <div>
-            <Link className="brand" to="/">
-              amazon
-            </Link>
-          </div> */}
-          {/* <Container>
-            <Link to="/cart?">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
-            </Link>
-            {userInfo ? (
-              <div className="dropdown">
-                <Link to="#">
-                  {userInfo.name.split(" ")[0]}{" "}
-                  <i className="fas fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/order-history">Order History</Link>
-                  </li>
-                  <li>
-                    <Link to="/profile">User Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signOutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link to="/signin">Sign In</Link>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/product-list">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/order-list">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/user-list">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </Container> */}
         </header>
         <main>
-          <Container>
+          <Container className="mt-3">
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:id">
