@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getError } from "../../utils";
 import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
@@ -24,7 +25,7 @@ export const listProducts = () => async (dispatch) => {
     const { data } = await axios.get("/api/products");
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+    dispatch({ type: PRODUCT_LIST_FAIL, payload: getError(error) });
   }
 };
 
@@ -39,10 +40,7 @@ export const productDetails = (productId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -64,10 +62,7 @@ export const createProduct = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -85,10 +80,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -106,10 +98,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };

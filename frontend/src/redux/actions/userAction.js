@@ -1,5 +1,6 @@
 import Axios from "axios";
 import axios from "../../../node_modules/axios/index";
+import { getError } from "../../utils";
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -36,10 +37,7 @@ export const signIn = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_SIGNIN_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -67,10 +65,7 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -88,10 +83,7 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -111,10 +103,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -132,10 +121,7 @@ export const listUser = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_LIST_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -153,10 +139,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -177,10 +160,7 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     console.log({ error });
     dispatch({
       type: USER_DELETE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
