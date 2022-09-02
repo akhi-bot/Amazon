@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import { Row, Col, ListGroup, Card, Badge, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ const ProductScreen = (props) => {
   // const { id } = useParams();
   const { slug } = useParams();
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { product, loading, error } = productDetails;
@@ -27,7 +27,7 @@ const ProductScreen = (props) => {
 
   const addToCartHandler = () => {
     dispatch(addToCart(product._id));
-    // navigate(`/cart/${id}?qty=${selectRef.current.value}`);
+    navigate(`/cart`);
   };
 
   return (

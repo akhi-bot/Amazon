@@ -115,7 +115,7 @@ function App() {
               </Route>
               <Route path="/cart">
                 <Route index element={<CartScreen />} />
-                <Route path=":id" element={<CartScreen />} />
+                {/* <Route path=":id" element={<CartScreen />} /> */}
               </Route>
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />

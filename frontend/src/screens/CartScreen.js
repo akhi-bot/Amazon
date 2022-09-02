@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import { Row, Col, ListGroup, Card, Badge, Button } from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   Link,
@@ -12,16 +15,16 @@ import { addToCart, removeFromCart } from "../redux/actions/cartAction";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id: productId } = useParams();
-  let qty = +useSearchParams()[0].get("qty") || 1;
+  // const { id: productId } = useParams();
+  // let qty = +useSearchParams()[0].get("qty") || 1;
 
   const { cartItems } = useSelector((state) => state.cart);
 
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
-  }, [dispatch, productId, qty]);
+  // useEffect(() => {
+  //   if (productId) {
+  //     dispatch(addToCart(productId, qty));
+  //   }
+  // }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => () => {
     dispatch(removeFromCart(id));
@@ -32,76 +35,88 @@ const CartScreen = () => {
   };
 
   return (
-    <div className="row top">
-      <div className="col-2">
-        <h1>Shopping Cart</h1>
-        {cartItems.length === 0 ? (
-          <MessageBox>
-            Cart is empty. <Link to="/">Go Shopping</Link>
-          </MessageBox>
-        ) : (
-          <ul>
-            {cartItems.map((item) => (
-              <li key={item.product}>
-                <div className="row">
-                  <div className="">
-                    <img src={item.image} alt={item.name} className="small" />
-                  </div>
-                  <div className="min-30">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </div>
-                  <div>
-                    <select
-                      value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
+    <div>
+      <Helmet>
+        <title>Shopping Cart</title>
+      </Helmet>
+      <h1>Shopping Cart</h1>
+      <Row>
+        <Col md={8}>
+          {cartItems.length === 0 ? (
+            <MessageBox>
+              Cart is empty. <Link to="/">Go Shopping</Link>
+            </MessageBox>
+          ) : (
+            <ListGroup>
+              {cartItems.map((item) => (
+                <ListGroup.Item key={item._id}>
+                  <Row className="align-items-center">
+                    <Col md={4}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="img-fluid rounded img-thumbnail"
+                      />{" "}
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </Col>
+                    <Col md={3}>
+                      <Button variant="light" disabled={item.quantity === 1}>
+                        <i className="fas fa-minus-circle"></i>
+                      </Button>{" "}
+                      <span>{item.quantity}</span>{" "}
+                      <Button
+                        variant="light"
+                        disabled={item.quantity === item.countInStock}
+                      >
+                        <i className="fas fa-plus-circle"></i>
+                      </Button>
+                    </Col>
+                    <Col md={3}>${item.price}</Col>
+                    <Col md={2}>
+                      <Button
+                        variant="light"
+                        onClick={removeFromCartHandler(item.product)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
+        </Col>
+        <Col md={4}>
+          <Card>
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <h2>
+                    Subtotal({cartItems.reduce((acc, c) => acc + c.quantity, 0)}{" "}
+                    items): $
+                    {cartItems.reduce(
+                      (acc, c) => acc + c.price * c.quantity,
+                      0
+                    )}
+                  </h2>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div className="d-grid">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      onClick={checkoutHandler}
+                      disabled={cartItems.length === 0}
                     >
-                      {[...Array(item.countInStock)].map((x, i) => (
-                        <option key={i} value={i + 1}>
-                          {i + 1}
-                        </option>
-                      ))}
-                    </select>
+                      Proceed To Checkout
+                    </Button>
                   </div>
-                  <div>${item.price}</div>
-                  <div>
-                    <button
-                      type="submit"
-                      onClick={removeFromCartHandler(item.product)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <div className="col-1">
-        <div className="card card-body">
-          <ul>
-            <li>
-              <h2>
-                Subtotal({cartItems.reduce((acc, c) => acc + c.qty, 0)} items):
-                ${cartItems.reduce((acc, c) => acc + c.price * c.qty, 0)}
-              </h2>
-            </li>
-            <li>
-              <button
-                onClick={checkoutHandler}
-                className="primary block"
-                disabled={cartItems.length === 0}
-              >
-                Proceed To Checkout
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

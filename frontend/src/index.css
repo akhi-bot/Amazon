@@ -152,9 +152,12 @@ img.small {
   max-width: 5rem;
   width: 100%;
 } */
-/* img.large {
-  width: 100%;
-} */
+.img-large {
+  max-width: 100%;
+}
+.img-thumbnail {
+  height: 80px;
+}
 
 .site-container {
   min-height: 100vh;
@@ -181,9 +184,6 @@ img.small {
 }
 .product-info {
   padding: 1rem;
-}
-.img-large {
-  max-width: 100%;
 }
 
 /*  Card */

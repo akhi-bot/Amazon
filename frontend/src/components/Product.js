@@ -1,16 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/actions/cartAction";
 const Product = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { product } = props;
 
   const addToCartHandler = () => {
     dispatch(addToCart(product._id));
-    // navigate(`/cart/${id}?qty=${selectRef.current.value}`);
+    navigate(`/cart`);
   };
   return (
     <Card>
