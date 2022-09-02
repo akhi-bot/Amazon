@@ -29,8 +29,8 @@ const HomeScreen = () => {
         ) : (
           <Row>
             {products.map((product) => (
-              // <Col sm={6} md={4} lg={3} className="mb-3" key={product.slug}>
-              <Col sm={6} md={4} lg={3} className="mb-3" key={product._id}>
+              <Col sm={6} md={4} lg={3} className="mb-3" key={product.slug}>
+                {/* <Col sm={6} md={4} lg={3} className="mb-3" key={product._id}> */}
                 <Product product={product} />
               </Col>
             ))}

@@ -6,20 +6,22 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstants";
 
-export const addToCart = (productId, qty) => async (dispatch, getState) => {
+export const addToCart = (productId) => async (dispatch, getState) => {
+  const existItem = getState().cart.cartItems.find((x) => x._id === productId);
+  const quantity = existItem ? existItem.quantity + 1 : 1;
   const { data } = await axios.get(`/api/products/${productId}`);
+  if (data.countInStock < quantity) {
+    window.alert("Sorry, Product is out of stock");
+    return;
+  }
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
-      name: data.name,
-      image: data.image,
-      price: data.price,
-      countInStock: data.countInStock,
-      product: data._id,
-      qty,
+      ...data,
+      quantity: quantity,
     },
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  // localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
 export const removeFromCart = (productId) => (dispatch, getState) => {

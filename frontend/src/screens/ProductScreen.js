@@ -8,25 +8,26 @@ import MessageBox from "../components/MessageBox";
 import { productDetails as detailsProduct } from "../redux/actions/productAction";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { addToCart } from "../redux/actions/cartAction";
 const ProductScreen = (props) => {
-  const selectRef = useRef();
-  const { id } = useParams();
-  // const { slug } = useParams();
+  // const { id } = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { product, loading, error } = productDetails;
 
-  useEffect(() => {
-    dispatch(detailsProduct(id));
-  }, [dispatch, id]);
   // useEffect(() => {
-  //   dispatch(detailsProduct(slug));
-  // }, [dispatch, slug]);
+  //   dispatch(detailsProduct(id));
+  // }, [dispatch, id]);
+  useEffect(() => {
+    dispatch(detailsProduct(slug));
+  }, [dispatch, slug]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${id}?qty=${selectRef.current.value}`);
+    dispatch(addToCart(product._id));
+    // navigate(`/cart/${id}?qty=${selectRef.current.value}`);
   };
 
   return (
@@ -37,8 +38,6 @@ const ProductScreen = (props) => {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Row>
-          {/* <Link to="/">Back to Result</Link> */}
-          {/* <div className="row top"> */}
           <Col md={6}>
             <img className="img-large" src={product.image} alt={product.name} />
           </Col>
@@ -86,7 +85,7 @@ const ProductScreen = (props) => {
                   </ListGroup.Item>
                   {product.countInStock > 0 && (
                     <>
-                      <ListGroup.Item className="">
+                      {/* <ListGroup.Item className="">
                         <div>
                           <div className="">Qty</div>
                           <div className="">
@@ -99,7 +98,7 @@ const ProductScreen = (props) => {
                             </select>
                           </div>
                         </div>
-                      </ListGroup.Item>
+                      </ListGroup.Item> */}
                       <ListGroup.Item>
                         <div className="d-grid">
                           <Button onClick={addToCartHandler} variant="primary">
@@ -113,7 +112,6 @@ const ProductScreen = (props) => {
               </Card.Body>
             </Card>
           </Col>
-          {/* </div> */}
         </Row>
       )}
     </>

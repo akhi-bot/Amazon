@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Nav, Badge } from "react-bootstrap";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import { signOut } from "./redux/actions/userAction";
@@ -39,8 +39,18 @@ function App() {
               <LinkContainer to="/">
                 <Navbar.Brand>amazon</Navbar.Brand>
               </LinkContainer>
+              <Nav className="me-auto">
+                <Link to="/cart?" className="nav-link">
+                  Cart
+                  {cartItems.length > 0 && (
+                    <Badge pill bg="danger">
+                      {cartItems.reduce((a, c) => a + c.quantity, 0)}
+                    </Badge>
+                  )}
+                </Link>
+              </Nav>
             </Container>
-            <Container>
+            {/* <Container>
               <Link to="/cart?">
                 Cart
                 {cartItems.length > 0 && (
@@ -91,14 +101,15 @@ function App() {
                   </ul>
                 </div>
               )}
-            </Container>
+            </Container> */}
           </Navbar>
         </header>
         <main>
           <Container className="mt-3">
             <Routes>
               <Route path="/" element={<HomeScreen />} />
-              <Route path="/product/:id">
+              {/* <Route path="/product/:id"> */}
+              <Route path="/product/:slug">
                 <Route index element={<ProductScreen />} />
                 <Route path="edit" element={<ProductEditScreen />} />
               </Route>
