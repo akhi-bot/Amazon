@@ -10,7 +10,11 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
-import { addToCart, removeFromCart } from "../redux/actions/cartAction";
+import {
+  addToCart,
+  removeFromCart,
+  updateCart,
+} from "../redux/actions/cartAction";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -32,6 +36,10 @@ const CartScreen = () => {
 
   const checkoutHandler = () => {
     navigate("/signin?redirect=shipping");
+  };
+
+  const updateCartHandler = (item, quantity) => {
+    dispatch(updateCart(item, quantity));
   };
 
   return (
@@ -60,12 +68,21 @@ const CartScreen = () => {
                       <Link to={`/product/${item.product}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
-                      <Button variant="light" disabled={item.quantity === 1}>
+                      <Button
+                        variant="light"
+                        disabled={item.quantity === 1}
+                        onClick={() =>
+                          updateCartHandler(item, item.quantity - 1)
+                        }
+                      >
                         <i className="fas fa-minus-circle"></i>
                       </Button>{" "}
                       <span>{item.quantity}</span>{" "}
                       <Button
                         variant="light"
+                        onClick={() =>
+                          updateCartHandler(item, item.quantity + 1)
+                        }
                         disabled={item.quantity === item.countInStock}
                       >
                         <i className="fas fa-plus-circle"></i>
@@ -75,7 +92,7 @@ const CartScreen = () => {
                     <Col md={2}>
                       <Button
                         variant="light"
-                        onClick={removeFromCartHandler(item.product)}
+                        onClick={removeFromCartHandler(item._id)}
                       >
                         <i className="fas fa-trash"></i>
                       </Button>
@@ -104,7 +121,7 @@ const CartScreen = () => {
                   <div className="d-grid">
                     <Button
                       type="button"
-                      variant="primary"
+                      variant={cartItems.length === 0 ? "secondary" : "primary"}
                       onClick={checkoutHandler}
                       disabled={cartItems.length === 0}
                     >

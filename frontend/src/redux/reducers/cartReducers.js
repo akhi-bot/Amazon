@@ -7,22 +7,19 @@ import {
 } from "../constants/cartConstants";
 
 export const cartReducers = (state = { cartItems: [] }, action) => {
+  console.log(action.payload);
   switch (action.type) {
     case CART_ADD_ITEM:
       const newItem = action.payload;
       const existItem = state.cartItems.find(
         (item) => item._id === newItem._id
       );
-      if (existItem) {
-        return {
-          ...state,
-          cartItems: state.cartItems.map((x) =>
-            x._id === existItem._id ? newItem : x
-          ),
-        };
-      } else {
-        return { ...state, cartItems: [...state.cartItems, newItem] };
-      }
+      const cartItems = existItem
+        ? state.cartItems.map((x) => (x._id === existItem._id ? newItem : x))
+        : [...state.cartItems, newItem];
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      return { ...state, cartItems };
 
     case CART_REMOVE_ITEM:
       return {

@@ -29,9 +29,15 @@ const Product = (props) => {
           <strong>${product.price}</strong>
         </Card.Text>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Button onClick={addToCartHandler} variant="primary">
-          Add to Cart
-        </Button>
+        {product.countInStock === 0 ? (
+          <Button variant="secondary" disabled>
+            Out of stock
+          </Button>
+        ) : (
+          <Button onClick={addToCartHandler} variant="primary">
+            Add to Cart
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );

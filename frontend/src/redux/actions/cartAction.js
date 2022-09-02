@@ -23,6 +23,20 @@ export const addToCart = (productId) => async (dispatch, getState) => {
   });
   // localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
+export const updateCart = (item, quantity) => async (dispatch, getState) => {
+  const { data } = await axios.get(`/api/products/${item._id}`);
+  if (data.countInStock < quantity) {
+    window.alert("Sorry, Product is out of stock");
+    return;
+  }
+  dispatch({
+    type: CART_ADD_ITEM,
+    payload: {
+      ...item,
+      quantity: quantity,
+    },
+  });
+};
 
 export const removeFromCart = (productId) => (dispatch, getState) => {
   dispatch({ type: CART_REMOVE_ITEM, payload: productId });
