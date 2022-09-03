@@ -12,7 +12,14 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazon");
+mongoose
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/amazon")
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
 
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
