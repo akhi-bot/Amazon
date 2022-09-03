@@ -6,6 +6,7 @@ import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 import orderRouter from "./routers/orderRouter.js";
 import uploadRouter from "./routers/uploadRouter.js";
+import seedRouter from "./routers/seedRouter.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ mongoose
     console.log(error.message);
   });
 
+app.use("/api/seed", seedRouter);
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
