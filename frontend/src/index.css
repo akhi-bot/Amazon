@@ -282,14 +282,11 @@ img.small {
 
 /*Checkout Steps  */
 .checkout-steps > div {
-  border-top: 0.3rem solid #c0c0c0;
-  color: #c0c0c0;
-  flex: 1;
-  padding: 1rem;
-  font-weight: "bold";
+  border-bottom: 0.3rem solid #a0a0a0;
+  color: #a0a0a0;
 }
 .checkout-steps > div.active {
-  border-top-color: #f08000;
+  border-bottom: 0.3rem solid #f08000;
   color: #f08000;
 }
 /* table */
