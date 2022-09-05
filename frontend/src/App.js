@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Navbar, Container, Nav, Badge } from "react-bootstrap";
+import { Navbar, NavDropdown, Container, Nav, Badge } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 import AdminRoute from "./components/AdminRoute";
+import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import { signOut } from "./redux/actions/userAction";
 import CartScreen from "./screens/CartScreen";
@@ -33,13 +35,14 @@ function App() {
   return (
     <BrowserRouter>
       <div className="d-flex flex-column site-container">
+        <ToastContainer position="bottom-center" limit={1} />
         <header>
           <Navbar bg="dark" variant="dark">
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>amazon</Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
+              <Nav className="me-auto" activeKey="1">
                 <Link to="/cart?" className="nav-link">
                   Cart
                   {cartItems.length > 0 && (
@@ -48,6 +51,47 @@ function App() {
                     </Badge>
                   )}
                 </Link>
+                {userInfo ? (
+                  <NavDropdown title={userInfo?.name} id="basic-nav-dropdown">
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>User Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/order-history">
+                      <NavDropdown.Item>Order History</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider />
+                    <Link
+                      to="#signout"
+                      onClick={signOutHandler}
+                      className="dropdown-item"
+                    >
+                      Sign Out
+                    </Link>
+                  </NavDropdown>
+                ) : (
+                  <Link to="/signin" className="nav-link">
+                    Sign In
+                  </Link>
+                )}
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropdown title="Admin" id="basic-nav-dropdown">
+                    <LinkContainer to="/dashboard">
+                      <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                    </LinkContainer>
+
+                    <LinkContainer to="/product-list">
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+
+                    <LinkContainer to="/order-list">
+                      <NavDropdown.Item>Orders</NavDropdown.Item>
+                    </LinkContainer>
+
+                    <LinkContainer to="/user-list">
+                      <NavDropdown.Item>Users</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )}
               </Nav>
             </Container>
             {/* <Container>

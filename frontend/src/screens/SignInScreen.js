@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
+// import MessageBox from "../components/MessageBox";
 import { signIn } from "../redux/actions/userAction";
 import { Helmet } from "react-helmet-async";
 
@@ -13,7 +13,7 @@ const SignInScreen = (props) => {
   const dispatch = useDispatch();
   const redirect = useSearchParams()[0].get("redirect");
   const navigate = useNavigate();
-  const { userInfo, error, loading } = useSelector((state) => state.userSignIn);
+  const { userInfo, loading } = useSelector((state) => state.userSignIn);
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -32,13 +32,12 @@ const SignInScreen = (props) => {
       <Form className="form" onSubmit={submitHandler}>
         <h1 className="my-3">Sign In</h1>
         {loading && <LoadingBox></LoadingBox>}
-        {error && <MessageBox variant="danger">{error}</MessageBox>}
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
-            id="email"
             placeholder="Enter email"
+            autoComplete="email"
             required
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -47,7 +46,7 @@ const SignInScreen = (props) => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            id="password"
+            autoComplete="password"
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}

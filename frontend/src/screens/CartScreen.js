@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Row, Col, ListGroup, Card, Badge, Button } from "react-bootstrap";
+import { Row, Col, ListGroup, Card, Button } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   Link,
   useNavigate,
-  useParams,
-  useSearchParams,
+  // useParams,
+  // useSearchParams,
 } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
 import {
-  addToCart,
+  // addToCart,
   removeFromCart,
   updateCart,
 } from "../redux/actions/cartAction";
@@ -83,7 +83,7 @@ const CartScreen = () => {
                         onClick={() =>
                           updateCartHandler(item, item.quantity + 1)
                         }
-                        disabled={item.quantity === item.countInStock}
+                        // disabled={item.quantity === item.countInStock}
                       >
                         <i className="fas fa-plus-circle"></i>
                       </Button>

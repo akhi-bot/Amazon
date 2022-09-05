@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
@@ -11,7 +13,7 @@ export const addToCart = (productId) => async (dispatch, getState) => {
   const quantity = existItem ? existItem.quantity + 1 : 1;
   const { data } = await axios.get(`/api/products/${productId}`);
   if (data.countInStock < quantity) {
-    window.alert("Sorry, Product is out of stock");
+    toast.error("Sorry, Product is out of stock");
     return;
   }
   dispatch({
@@ -26,7 +28,7 @@ export const addToCart = (productId) => async (dispatch, getState) => {
 export const updateCart = (item, quantity) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${item._id}`);
   if (data.countInStock < quantity) {
-    window.alert("Sorry, Product is out of stock");
+    toast.error("Sorry, Product is out of stock");
     return;
   }
   dispatch({

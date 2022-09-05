@@ -1,5 +1,6 @@
 import Axios from "axios";
 import axios from "../../../node_modules/axios/index";
+import { toast } from "react-toastify";
 import { getError } from "../../utils";
 import {
   USER_DELETE_FAIL,
@@ -35,6 +36,7 @@ export const signIn = (email, password) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: USER_SIGNIN_FAILURE,
       payload: getError(error),
