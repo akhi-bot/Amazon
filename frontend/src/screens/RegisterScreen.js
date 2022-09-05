@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
 import { register } from "../redux/actions/userAction";
+import { Container, Form, Button } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 const RegisterScreen = (props) => {
   const [name, setName] = useState("");
@@ -13,13 +15,11 @@ const RegisterScreen = (props) => {
   const dispatch = useDispatch();
   const redirect = useSearchParams()[0].get("redirect");
   const navigate = useNavigate();
-  const { userInfo, error, loading } = useSelector(
-    (state) => state.userRegister
-  );
+  const { userInfo, loading } = useSelector((state) => state.userRegister);
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("password and confirm password are not match");
+      toast.error("password and confirm password are not match");
     } else {
       dispatch(register(name, email, password));
     }
@@ -36,68 +36,62 @@ const RegisterScreen = (props) => {
   }, [userInfo, navigate, redirect]);
 
   return (
-    <div>
-      <form className="form" onSubmit={submitHandler}>
-        <div>
-          <h1>Create Account</h1>
-        </div>
+    <Container className="small-container">
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
+      <Form onSubmit={submitHandler}>
+        <h1>Create Account</h1>
         {loading && <LoadingBox></LoadingBox>}
-        {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="text"
-            id="name"
             placeholder="Enter name"
             required
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="email">Email Address</label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
             type="email"
-            id="email"
             placeholder="Enter email"
             required
             onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
             type="password"
-            id="password"
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="confirmPassword">
+          <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
+          <Form.Control
             type="password"
-            id="confirmPassword"
             placeholder="Enter confirm-password"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </div>
-        <div>
-          <label />
-          <button className="primary" type="submit">
+        </Form.Group>
+        <div className="mb-3">
+          <Button className="primary" type="submit">
             Register
-          </button>
+          </Button>
         </div>
         <div>
-          <label />
           <div>
             Already have an account?{" "}
             <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
           </div>
         </div>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 };
 

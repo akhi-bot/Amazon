@@ -32,7 +32,22 @@ userRouter.post(
       email,
       password: bcrypt.hashSync(password, 8),
     });
-    const createdUser = await user.save();
+    let emailExists = await User.findOne({ email: user.email });
+
+    if (emailExists) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists!",
+      });
+    }
+    const createdUser = await user.save(function (err) {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          error: "Database Error!",
+        });
+      }
+    });
     res.send({
       _id: user._id,
       name: createdUser.name,
