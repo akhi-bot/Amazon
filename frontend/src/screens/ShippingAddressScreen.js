@@ -16,11 +16,11 @@ const ShippingAddressScreen = () => {
       navigate("/signin");
     }
   }, [userInfo, navigate]);
-  const [fullName, setFullName] = useState(shippingAddress.fullName);
-  const [address, setAddress] = useState(shippingAddress.address);
-  const [city, setCity] = useState(shippingAddress.city);
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [country, setCountry] = useState(shippingAddress.country);
+  const [fullName, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [country, setCountry] = useState("");
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
@@ -29,6 +29,16 @@ const ShippingAddressScreen = () => {
     );
     navigate("/payment");
   };
+
+  useEffect(() => {
+    if (!(JSON.stringify(shippingAddress) === "{}")) {
+      setFullName(shippingAddress.fullName);
+      setAddress(shippingAddress.address);
+      setCity(shippingAddress.city);
+      setPostalCode(shippingAddress.postalCode);
+      setCountry(shippingAddress.country);
+    }
+  }, [shippingAddress]);
   return (
     <div>
       <Helmet>

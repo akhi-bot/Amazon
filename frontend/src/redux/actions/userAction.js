@@ -48,6 +48,7 @@ export const signOut = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("cartItems");
   localStorage.removeItem("shippingAddress");
+  localStorage.removeItem("paymentMethod");
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_SIGNOUT });
 };
