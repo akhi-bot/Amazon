@@ -119,6 +119,7 @@ export const listOrders = () => async (dispatch, getState) => {
     const { data } = await axios.get("/api/orders", {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
+    console.log(data);
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
