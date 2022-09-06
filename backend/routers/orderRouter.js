@@ -39,8 +39,8 @@ orderRouter.post(
     if (orderItems.length === 0) {
       res.status(400).send({ message: "Cart is empty" });
     } else {
-      const order = new Order({
-        orderItems,
+      const newOrder = new Order({
+        orderItems: orderItems.map((x) => ({ ...x, product: x._id })),
         shippingAddress,
         paymentMethod,
         itemsPrice,
@@ -50,9 +50,9 @@ orderRouter.post(
         user: req.user._id,
       });
 
-      const createdOrder = await order.save();
+      const createdOrder = await newOrder.save();
       res
-        .status(200)
+        .status(201)
         .send({ message: "New Order Created", order: createdOrder });
     }
   })

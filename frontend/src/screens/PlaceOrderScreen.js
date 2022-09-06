@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../redux/actions/orderAction";
 import { ORDER_CREATE_RESET } from "../redux/constants/orderConstants";
 import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
 import { Helmet } from "react-helmet-async";
 import { Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 
@@ -14,7 +13,7 @@ const PlaceOrderScreen = () => {
   const { cartItems, paymentMethod, shippingAddress } = cart;
 
   const orderCreate = useSelector((state) => state.orderCreate);
-  const { loading, success, error, order } = orderCreate;
+  const { loading, success, order } = orderCreate;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -151,54 +150,9 @@ const PlaceOrderScreen = () => {
                       Place Order
                     </Button>
                   </div>
+                  {loading && <LoadingBox></LoadingBox>}
                 </ListGroup.Item>
-                {loading && <LoadingBox></LoadingBox>}
-                {error && <MessageBox variant="danger">{error}</MessageBox>}
               </ListGroup>
-              {/* <li>
-                <h2>Order Summary</h2>
-              </li> */}
-              {/* <li>
-                <div className="row">
-                  <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Shipping</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>
-                    <strong>Order Total</strong>
-                  </div>
-                  <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <button
-                  className="primary block"
-                  type="button"
-                  onClick={placeOrderHandler}
-                  disabled={cartItems.length === 0}
-                >
-                  {" "}
-                  Place Order
-                </button>
-              </li>
-              {loading && <LoadingBox></LoadingBox>}
-              {error && <MessageBox variant="danger">{error}</MessageBox>} */}
             </Card.Body>
           </Card>
         </Col>

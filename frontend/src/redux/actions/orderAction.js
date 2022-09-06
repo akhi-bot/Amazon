@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { getError } from "../../utils";
 import { CART_EMPTY } from "../constants/cartConstants";
 
@@ -33,15 +34,17 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const {
       userSignIn: { userInfo },
     } = getState();
+    console.log(order);
     const { data } = await axios.post("/api/orders", order, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
+    dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     localStorage.removeItem("cartItems");
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload: getError(error),
