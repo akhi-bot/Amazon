@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Row, Col, Card, Button, ListGroup } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -85,79 +87,158 @@ const OrderScreen = () => {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
-      <h1>Order {order._id}</h1>
-      <div className="row top">
-        <div className="col-2">
-          <ul>
-            <li>
-              <div className="card card-body">
-                <h2>Shipping</h2>
-                <p>
-                  <strong>Name: </strong>
-                  {order.shippingAddress.fullName} <br />
-                  <strong>Address: </strong>
-                  {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
-                  {order.shippingAddress.postalCode},{" "}
-                  {order.shippingAddress.country}
-                </p>
-                {order.isDelivered ? (
-                  <MessageBox variant="success">
-                    Delivered at {order.deliveredAt}
-                  </MessageBox>
-                ) : (
-                  <MessageBox variant="danger">Not Delivered</MessageBox>
-                )}
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Payment</h2>
-                <p>
-                  <strong>Method: </strong>
-                  {order.paymentMethod}
-                </p>
-                {order.isPaid ? (
-                  <MessageBox variant="success">
-                    Paid at {order.paidAt}
-                  </MessageBox>
-                ) : (
-                  <MessageBox variant="danger">Not Paid</MessageBox>
-                )}
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div className="">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          />
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+      <Helmet>
+        <title>Order {orderId}</title>
+      </Helmet>
+      <h1 className="my-3">Order {orderId}</h1>
+      <Row>
+        <Col md={8}>
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>Shipping</Card.Title>
+              <Card.Text>
+                <strong>Name: </strong>
+                {order.shippingAddress.fullName} <br />
+                <strong>Address: </strong>
+                {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
+                {order.shippingAddress.postalCode},{" "}
+                {order.shippingAddress.country}
+              </Card.Text>
+              {order.isDelivered ? (
+                <MessageBox variant="success">
+                  Delivered at {order.deliveredAt}
+                </MessageBox>
+              ) : (
+                <MessageBox variant="danger">Not Delivered</MessageBox>
+              )}
+            </Card.Body>
+          </Card>
 
-                        <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="col-1">
-          <div className="card-body card">
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>Payment</Card.Title>
+              <Card.Text>
+                <strong>Method: </strong>
+                {order.paymentMethod}
+              </Card.Text>
+              {order.isPaid ? (
+                <MessageBox variant="success">
+                  Paid at {order.paidAt}
+                </MessageBox>
+              ) : (
+                <MessageBox variant="danger">Not Paid</MessageBox>
+              )}
+            </Card.Body>
+          </Card>
+
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>Items</Card.Title>
+              <ListGroup variant="flush">
+                {order.orderItems.map((item) => (
+                  <ListGroup.Item key={item.product}>
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="img-fluid rounded img-thumbnail"
+                        />{" "}
+                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                      </Col>
+
+                      <Col md={3}>
+                        <span>{item.quantity}</span>
+                      </Col>
+                      <Col md={3}>
+                        {item.quantity} x ${item.price} = $
+                        {item.quantity * item.price}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card>
+            <Card.Body>
+              <Card.Title>Order Summary</Card.Title>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Items</Col>
+                    <Col>${order.itemsPrice.toFixed(2)}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Shipping</Col>
+                    <Col>${order.shippingPrice.toFixed(2)}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Tax</Col>
+                    <Col>${order.taxPrice.toFixed(2)}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>
+                      <strong>Order Total</strong>
+                    </Col>
+                    <Col>
+                      <strong>${order.totalPrice.toFixed(2)}</strong>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div className="d-grid">
+                    {!order.isPaid && (
+                      <>
+                        {!sdkReady ? (
+                          <LoadingBox></LoadingBox>
+                        ) : (
+                          <>
+                            {errorPay && (
+                              <MessageBox variant="danger">
+                                {errorPay}
+                              </MessageBox>
+                            )}
+                            {loadingPay && <LoadingBox></LoadingBox>}
+                            <PayPalButton
+                              amount={order.totalPrice}
+                              onSuccess={successPaymentHandler}
+                            ></PayPalButton>
+                          </>
+                        )}
+                      </>
+                    )}
+                    {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                      <ListGroup.Item>
+                        {loadingDeliver && <LoadingBox></LoadingBox>}
+                        {errorDeliver && (
+                          <MessageBox variant="danger">
+                            {errorDeliver}
+                          </MessageBox>
+                        )}
+                        <Button
+                          type="button"
+                          className="primary block"
+                          onClick={deliverHandler}
+                        >
+                          Deliver Order
+                        </Button>
+                      </ListGroup.Item>
+                    )}
+                  </div>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+          {/* <div className="card-body card">
             <ul>
               <li>
                 <h2>Order Summary</h2>
@@ -224,9 +305,9 @@ const OrderScreen = () => {
                 </li>
               )}
             </ul>
-          </div>
-        </div>
-      </div>
+          </div> */}
+        </Col>
+      </Row>
     </div>
   );
 };

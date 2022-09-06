@@ -113,11 +113,12 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
+              {/* <Route path="/order/:id" element={<OrderScreen />} /> */}
               <Route path="/order-history" element={<OrderHistoryScreen />} />
               <Route path="/register" element={<RegisterScreen />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/profile" element={<ProfileScreen />} />
+                <Route path="/order/:id" element={<OrderScreen />} />
               </Route>
               <Route element={<AdminRoute />}>
                 <Route path="/user/:id/edit" element={<UserEditScreen />} />
