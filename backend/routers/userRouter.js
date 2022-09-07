@@ -82,16 +82,18 @@ userRouter.put(
       if (password) {
         user.password = bcrypt.hashSync(password, 8);
       }
+      const updateUser = await user.save();
+      res.send({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        isAdmin: updateUser.isAdmin,
+        isSeller: updateUser.isSeller,
+        token: generateToken(updateUser),
+      });
+    } else {
+      res.status(404).send({ message: "User not found" });
     }
-    const updateUser = await user.save();
-    res.send({
-      _id: updateUser._id,
-      name: updateUser.name,
-      email: updateUser.email,
-      isAdmin: updateUser.isAdmin,
-      isSeller: updateUser.isSeller,
-      token: generateToken(updateUser),
-    });
   })
 );
 

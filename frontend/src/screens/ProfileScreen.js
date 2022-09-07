@@ -4,6 +4,9 @@ import { detailsUser, updateUserProfile } from "../redux/actions/userAction";
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
 import { USER_UPDATE_PROFILE_RESET } from "../redux/constants/userConstants";
+import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
+import { Container, Form, Button } from "react-bootstrap";
 const ProfileScreen = () => {
   const dispatch = useDispatch();
 
@@ -19,19 +22,15 @@ const ProfileScreen = () => {
   const { loading, error, user } = userDetails;
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const {
-    success: successUpdate,
-    error: errorUpdate,
-    loading: loadingUpdate,
-  } = userUpdateProfile;
+  const { loading: loadingUpdate } = userUpdateProfile;
 
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch profile update
     if (password !== confirmPassword) {
-      alert("password And Confirm Password Are Not Matched");
+      toast.error("password And Confirm Password Are Not Matched");
     } else {
-      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+      dispatch(updateUserProfile({ name, email, password }));
     }
   };
   useEffect(() => {
@@ -44,74 +43,63 @@ const ProfileScreen = () => {
     }
   }, [dispatch, userInfo?._id, user]);
   return (
-    <div>
-      <form className="form" onSubmit={submitHandler}>
-        <div>
-          <h1>User Profile</h1>
-        </div>
+    <Container className="small-container">
+      <Helmet>
+        <title>User Profile</title>
+      </Helmet>
+      <h1 className="my-3">User Profile</h1>
+      <Form onSubmit={submitHandler}>
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <>
-            {loadingUpdate && <LoadingBox></LoadingBox>}
-            {errorUpdate && (
-              <MessageBox variant="danger">{errorUpdate}</MessageBox>
-            )}
-            {successUpdate && (
-              <MessageBox variant="success">
-                Profile Updated Successfully
-              </MessageBox>
-            )}
-            <div>
-              <label htmlFor="name">Name</label>
-              <input
+            {loadingUpdate && <LoadingBox />}
+
+            <Form.Group className="mb-3" ControlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
                 type="text"
-                id="name"
                 placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
+            </Form.Group>
+            <Form.Group className="mb-3" ControlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
                 type="text"
-                id="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="text"
-                id="password"
+            </Form.Group>
+            <Form.Group className="mb-3" ControlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
-            <div>
-              <label htmlFor="confirmPassword">confirm Password</label>
-              <input
-                type="text"
-                id="password"
+            </Form.Group>
+            <Form.Group className="mb-3" ControlId="confirmPassword">
+              <Form.Label>confirm Password</Form.Label>
+              <Form.Control
+                type="password"
                 placeholder="Enter password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </div>
-            <div>
-              <label />
-              <button className="primary" type="submit">
+            </Form.Group>
+            <div className="mb-3">
+              <Button className="primary" type="submit">
                 Update
-              </button>
+              </Button>
             </div>
           </>
         )}
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 };
 
