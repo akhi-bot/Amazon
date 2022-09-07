@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { ListGroup, Button } from "react-bootstrap";
 import { listOrderMine } from "../redux/actions/orderAction";
+import { Helmet } from "react-helmet-async";
 const OrderHistoryScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,6 +18,9 @@ const OrderHistoryScreen = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Order History</title>
+      </Helmet>
       <h1>Order History</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -46,15 +51,15 @@ const OrderHistoryScreen = () => {
                     : "No"}
                 </td>
                 <td>
-                  <button
+                  <Button
                     type="button"
-                    className="small"
+                    variant="secondary"
                     onClick={() => {
                       navigate(`/order/${order._id}`);
                     }}
                   >
                     Details
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}

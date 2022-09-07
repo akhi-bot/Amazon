@@ -25,11 +25,7 @@ const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
-  const {
-    error: errorPay,
-    success: successPay,
-    loading: loadingPay,
-  } = orderPay;
+  const { success: successPay, loading: loadingPay } = orderPay;
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
@@ -195,46 +191,39 @@ const OrderScreen = () => {
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <div className="d-grid">
-                    {!order.isPaid && (
-                      <>
-                        {!sdkReady ? (
-                          <LoadingBox></LoadingBox>
-                        ) : (
-                          <>
-                            {errorPay && (
-                              <MessageBox variant="danger">
-                                {errorPay}
-                              </MessageBox>
-                            )}
-                            {loadingPay && <LoadingBox></LoadingBox>}
-                            <PayPalButton
-                              amount={order.totalPrice}
-                              onSuccess={successPaymentHandler}
-                            ></PayPalButton>
-                          </>
-                        )}
-                      </>
-                    )}
-                    {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                      <ListGroup.Item>
-                        {loadingDeliver && <LoadingBox></LoadingBox>}
-                        {errorDeliver && (
-                          <MessageBox variant="danger">
-                            {errorDeliver}
-                          </MessageBox>
-                        )}
-                        <Button
-                          type="button"
-                          className="primary block"
-                          onClick={deliverHandler}
-                        >
-                          Deliver Order
-                        </Button>
-                      </ListGroup.Item>
-                    )}
-                  </div>
+                  {/* <div className="d-grid"> */}
+                  {!order.isPaid && (
+                    <>
+                      {!sdkReady ? (
+                        <LoadingBox></LoadingBox>
+                      ) : (
+                        <>
+                          {loadingPay && <LoadingBox></LoadingBox>}
+                          <PayPalButton
+                            amount={order.totalPrice}
+                            onSuccess={successPaymentHandler}
+                          ></PayPalButton>
+                        </>
+                      )}
+                    </>
+                  )}
+                  {/* </div> */}
                 </ListGroup.Item>
+                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                  <ListGroup.Item>
+                    {loadingDeliver && <LoadingBox></LoadingBox>}
+                    {errorDeliver && (
+                      <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                    )}
+                    <Button
+                      type="button"
+                      className="primary block"
+                      onClick={deliverHandler}
+                    >
+                      Deliver Order
+                    </Button>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
             </Card.Body>
           </Card>
