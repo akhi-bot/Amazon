@@ -87,7 +87,9 @@ export const payOrder =
         }
       );
       dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+      toast.success(data.message);
     } catch (error) {
+      toast.error(getError(error));
       dispatch({
         type: ORDER_PAY_FAIL,
         payload: getError(error),
