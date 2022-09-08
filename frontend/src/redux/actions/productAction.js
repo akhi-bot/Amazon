@@ -1,6 +1,10 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { getError } from "../../utils";
 import {
+  PRODUCT_CATEGORIES_FAIL,
+  PRODUCT_CATEGORIES_REQUEST,
+  PRODUCT_CATEGORIES_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
@@ -101,5 +105,17 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
       type: PRODUCT_DELETE_FAIL,
       payload: getError(error),
     });
+  }
+};
+
+export const productCategories = () => async (dispatch) => {
+  dispatch({ type: PRODUCT_CATEGORIES_REQUEST });
+
+  try {
+    const { data } = await axios.get("/api/products/categories");
+    dispatch({ type: PRODUCT_CATEGORIES_SUCCESS, payload: data });
+  } catch (error) {
+    toast.error(getError(error));
+    dispatch({ type: PRODUCT_CATEGORIES_FAIL, payload: getError(error) });
   }
 };

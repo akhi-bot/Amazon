@@ -1,5 +1,5 @@
 import Product from "../components/Product";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,4 +41,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default memo(HomeScreen);

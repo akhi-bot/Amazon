@@ -14,6 +14,18 @@ productRouter.get(
 );
 
 productRouter.get(
+  "/categories",
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct("category");
+    if (categories) {
+      res.send(categories);
+    } else {
+      res.status(404).send({ message: "No Category Found" });
+    }
+  })
+);
+
+productRouter.get(
   "/slug/:slug",
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug });
@@ -22,6 +34,7 @@ productRouter.get(
       : res.status(404).send({ message: "Product Not Found" });
   })
 );
+
 productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
