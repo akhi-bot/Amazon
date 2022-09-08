@@ -33,6 +33,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useEffect, useState } from "react";
 import { productCategories } from "./redux/actions/productAction";
 import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screens/SearchScreen";
 
 function App() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -163,6 +164,8 @@ function App() {
                 <Route index element={<CartScreen />} />
                 {/* <Route path=":id" element={<CartScreen />} /> */}
               </Route>
+
+              <Route path="/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />

@@ -17,6 +17,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_SEARCH_FAIL,
+  PRODUCT_SEARCH_REQUEST,
+  PRODUCT_SEARCH_SUCCESS,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
@@ -117,5 +120,17 @@ export const productCategories = () => async (dispatch) => {
   } catch (error) {
     toast.error(getError(error));
     dispatch({ type: PRODUCT_CATEGORIES_FAIL, payload: getError(error) });
+  }
+};
+export const productSearch = (searchCategoryObj) => async (dispatch) => {
+  dispatch({ type: PRODUCT_SEARCH_REQUEST });
+  const { page, query, category, price, rating, order } = searchCategoryObj;
+  try {
+    const { data } = await axios.get(
+      `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
+    );
+    dispatch({ type: PRODUCT_SEARCH_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_SEARCH_FAIL, payload: getError(error) });
   }
 };
