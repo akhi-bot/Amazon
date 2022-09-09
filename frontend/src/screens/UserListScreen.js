@@ -25,7 +25,7 @@ const UserListScreen = () => {
   }, [dispatch, successDelete]);
 
   const editHandler = (user) => {
-    navigate(`/user/${user._id}/edit`);
+    navigate(`/admin/user/${user._id}/edit`);
   };
   const deleteHandler = (user) => {
     if (window.confirm("Are you sure?")) {

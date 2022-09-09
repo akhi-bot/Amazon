@@ -34,6 +34,7 @@ import { useEffect, useState } from "react";
 import { productCategories } from "./redux/actions/productAction";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 
 function App() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -107,20 +108,20 @@ function App() {
                     </Link>
                   )}
                   {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title="Admin" id="basic-nav-dropdown">
-                      <LinkContainer to="/dashboard">
+                    <NavDropdown title="Admin" id="admin-nav-dropdown">
+                      <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                       </LinkContainer>
 
-                      <LinkContainer to="/product-list">
+                      <LinkContainer to="/admin/product-list">
                         <NavDropdown.Item>Products</NavDropdown.Item>
                       </LinkContainer>
 
-                      <LinkContainer to="/order-list">
+                      <LinkContainer to="/admin/order-list">
                         <NavDropdown.Item>Orders</NavDropdown.Item>
                       </LinkContainer>
 
-                      <LinkContainer to="/user-list">
+                      <LinkContainer to="/admin/user-list">
                         <NavDropdown.Item>Users</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
@@ -176,11 +177,12 @@ function App() {
                 <Route path="/profile" element={<ProfileScreen />} />
                 <Route path="/order/:id" element={<OrderScreen />} />
               </Route>
-              <Route element={<AdminRoute />}>
-                <Route path="/user/:id/edit" element={<UserEditScreen />} />
-                <Route path="/product-list" element={<ProductListScreen />} />
-                <Route path="/order-list" element={<OrderListScreen />} />
-                <Route path="/user-list" element={<UserListScreen />} />
+              <Route path="/admin" element={<AdminRoute />}>
+                <Route path="dashboard" element={<DashboardScreen />} />
+                <Route path="user/:id/edit" element={<UserEditScreen />} />
+                <Route path="product-list" element={<ProductListScreen />} />
+                <Route path="/admin/order-list" element={<OrderListScreen />} />
+                <Route path="/admin/user-list" element={<UserListScreen />} />
               </Route>
             </Routes>
           </Container>

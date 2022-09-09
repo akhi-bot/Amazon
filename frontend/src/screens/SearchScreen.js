@@ -58,8 +58,11 @@ const SearchScreen = () => {
   };
   useEffect(() => {
     dispatch(productSearch({ category, query, price, rating, order, page }));
-    dispatch(productCategories());
   }, [dispatch, category, rating, order, page, query, price]);
+
+  useEffect(() => {
+    dispatch(productCategories());
+  }, [dispatch]);
 
   return (
     <div>
