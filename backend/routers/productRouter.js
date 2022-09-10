@@ -28,7 +28,12 @@ productRouter.get(
 
     const queryFilter =
       searchQuery && searchQuery !== "all"
-        ? { name: { $regex: searchQuery, $options: "1" } }
+        ? {
+            $or: [
+              { name: { $regex: searchQuery, $options: "i" } },
+              { category: { $regex: searchQuery, $options: "i" } },
+            ],
+          }
         : {};
     const categoryFilter = category && category !== "all" ? { category } : {};
 
