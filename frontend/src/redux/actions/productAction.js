@@ -99,8 +99,10 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     const { data } = await axios.put(`/api/products/${product._id}`, product, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
+    toast.success(data.message);
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
       payload: getError(error),

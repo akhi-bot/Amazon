@@ -21,7 +21,7 @@ productRouter.post(
     const newProduct = new Product({
       name: `sample name ${Date.now()}`,
       slug: `sample-name-${Date.now()}`,
-      image: "/images/p1.jpg",
+      image: "/image/p1.jpg",
       price: 0,
       category: "sample category",
       brand: "sample brand",
@@ -33,6 +33,44 @@ productRouter.post(
 
     const createProduct = await newProduct.save();
     res.send({ message: "Product Created", product: createProduct });
+  })
+);
+
+productRouter.put(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (product) {
+      const {
+        name,
+        slug,
+        price,
+        image,
+        category,
+        brand,
+        countInStock,
+        description,
+      } = req.body;
+      product.name = name;
+      product.slug = slug;
+      product.price = price;
+      product.image = image;
+      product.category = category;
+      product.brand = brand;
+      product.countInStock = countInStock;
+      product.description = description;
+
+      const updatedProduct = await product.save();
+      res.send({
+        message: "Product Updated Successfully",
+        product: updatedProduct,
+      });
+    } else {
+      res.status(404).send({ message: "Product Not Found" });
+    }
   })
 );
 const PAGE_SIZE = 3;
@@ -163,32 +201,6 @@ productRouter.get(
     product
       ? res.send(product)
       : res.status(404).send({ message: "Product Not Found" });
-  })
-);
-
-productRouter.put(
-  "/:id",
-  isAuth,
-  isAdmin,
-  expressAsyncHandler(async (req, res) => {
-    const productId = req.params.id;
-    const product = await Product.findById(productId);
-    if (product) {
-      const { name, price, image, category, brand, countInStock, description } =
-        req.body;
-      product.name = name;
-      product.price = price;
-      product.image = image;
-      product.category = category;
-      product.brand = brand;
-      product.countInStock = countInStock;
-      product.description = description;
-
-      const updatedProduct = await product.save();
-      res.send({ message: "Product Updated", product: updatedProduct });
-    } else {
-      res.status(404).send({ message: "Product Not Found" });
-    }
   })
 );
 

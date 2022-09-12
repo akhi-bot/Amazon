@@ -5,7 +5,6 @@ import axios from "axios";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import {
-  productDetails,
   productDetailsById,
   updateProduct,
 } from "../redux/actions/productAction";
@@ -42,7 +41,7 @@ const ProductEditScreen = () => {
   } = productUpdate;
   useEffect(() => {
     if (successUpdate) {
-      navigate("/product-list");
+      navigate("/admin/product-list");
     }
     if (!product || product?._id !== productId || successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -101,8 +100,7 @@ const ProductEditScreen = () => {
         <title>Edit Product</title>
       </Helmet>
       <h1>Edit Product {productId}</h1>
-      {loadingUpdate && <LoadingBox></LoadingBox>}
-      {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
+
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -202,9 +200,10 @@ const ProductEditScreen = () => {
             />
           </Form.Group>
           <div className="mb-3">
-            <Button className="primary" type="submit">
+            <Button disabled={loadingUpdate} className="primary" type="submit">
               Update
             </Button>
+            {loadingUpdate && <LoadingBox></LoadingBox>}
           </div>
         </Form>
       )}
