@@ -159,7 +159,6 @@ function App() {
               {/* <Route path="/product/:id"> */}
               <Route path="/product/:slug">
                 <Route index element={<ProductScreen />} />
-                <Route path="edit" element={<ProductEditScreen />} />
               </Route>
               <Route path="/cart">
                 <Route index element={<CartScreen />} />
@@ -179,6 +178,7 @@ function App() {
               </Route>
               <Route path="/admin" element={<AdminRoute />}>
                 <Route path="dashboard" element={<DashboardScreen />} />
+                <Route path="product/:id" element={<ProductEditScreen />} />
                 <Route path="user/:id/edit" element={<UserEditScreen />} />
                 <Route path="product-list" element={<ProductListScreen />} />
                 <Route path="order-list" element={<OrderListScreen />} />

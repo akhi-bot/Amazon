@@ -113,7 +113,7 @@ const ProductListScreen = () => {
                       variant="secondary"
                       size="sm"
                       onClick={() => {
-                        navigate(`/product/${product._id}/edit`);
+                        navigate(`/admin/product/${product._id}`);
                       }}
                     >
                       Edit

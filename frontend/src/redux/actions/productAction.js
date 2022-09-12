@@ -40,13 +40,23 @@ export const listProducts = () => async (dispatch) => {
 };
 
 export const productDetails = (slug) => async (dispatch) => {
-  // export const productDetails = (productId) => async (dispatch) => {
-  // dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: slug });
 
   try {
     const { data } = await axios.get(`/api/products/slug/${slug}`);
-    // const { data } = await axios.get(`/api/products/${productId}`);
+    dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload: getError(error),
+    });
+  }
+};
+export const productDetailsById = (productId) => async (dispatch) => {
+  dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
+
+  try {
+    const { data } = await axios.get(`/api/products/${productId}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
