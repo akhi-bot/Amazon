@@ -12,7 +12,7 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from "../redux/constants/productConstants";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ProductListScreen = () => {
@@ -27,7 +27,6 @@ const ProductListScreen = () => {
   const productCreate = useSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
-    error: errorCreate,
     product: createdProduct,
     success: successCreate,
   } = productCreate;
@@ -42,7 +41,7 @@ const ProductListScreen = () => {
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
-      navigate(`/product/${createdProduct?._id}/edit`);
+      navigate(`/admin/product/${createdProduct?._id}`);
     }
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
@@ -64,22 +63,25 @@ const ProductListScreen = () => {
   };
 
   const createHandler = () => {
-    dispatch(createProduct());
+    if (window.confirm("Are you sure to create?")) dispatch(createProduct());
   };
   return (
     <div>
-      <h1>Products</h1>
-      <div className="row">
-        <button className="primary" onClick={createHandler} type="button">
-          {" "}
-          Create Product
-        </button>
-      </div>
+      <Row>
+        <Col>
+          <h1>Products</h1>
+        </Col>
+        <Col className="Col text-end">
+          <Button onClick={createHandler} type="button">
+            {" "}
+            Create Product
+          </Button>
+        </Col>
+      </Row>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loadingCreate && <LoadingBox></LoadingBox>}
-      {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

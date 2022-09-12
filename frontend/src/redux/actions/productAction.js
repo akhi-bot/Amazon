@@ -69,8 +69,10 @@ export const createProduct = () => async (dispatch, getState) => {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
     );
+    toast.success("product created successfully");
     dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product });
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: PRODUCT_CREATE_FAIL,
       payload: getError(error),
