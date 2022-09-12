@@ -54,6 +54,7 @@ const OrderHistoryScreen = () => {
                   <Button
                     type="button"
                     variant="secondary"
+                    size="sm"
                     onClick={() => {
                       navigate(`/order/${order._id}`);
                     }}

@@ -181,8 +181,8 @@ function App() {
                 <Route path="dashboard" element={<DashboardScreen />} />
                 <Route path="user/:id/edit" element={<UserEditScreen />} />
                 <Route path="product-list" element={<ProductListScreen />} />
-                <Route path="/admin/order-list" element={<OrderListScreen />} />
-                <Route path="/admin/user-list" element={<UserListScreen />} />
+                <Route path="order-list" element={<OrderListScreen />} />
+                <Route path="user-list" element={<UserListScreen />} />
               </Route>
             </Routes>
           </Container>

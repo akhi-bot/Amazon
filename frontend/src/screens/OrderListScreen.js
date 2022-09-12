@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
@@ -68,22 +69,24 @@ const OrderListScreen = () => {
                     : "No"}
                 </td>
                 <td>
-                  <button
+                  <Button
                     type="button"
-                    className="small"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => {
                       navigate(`/order/${order._id}`);
                     }}
                   >
                     Details
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
                     onClick={() => deleteHandler(order)}
-                    className="small"
+                    variant="secondary"
+                    size="sm"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
