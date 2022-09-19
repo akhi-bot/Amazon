@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import {
   productDetailsById,
+  productFileUpload,
   updateProduct,
 } from "../redux/actions/productAction";
 import { PRODUCT_UPDATE_RESET } from "../redux/constants/productConstants";
@@ -25,24 +25,23 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState("");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
-  const [loadingUpload, setLoadingUpload] = useState(false);
-  const [errorUpload, setErrorUpload] = useState("");
 
   const detailProduct = useSelector((state) => state.productDetails);
   const { loading, product, error } = detailProduct;
-  const userSignIn = useSelector((state) => state.userSignIn);
-  const { userInfo } = userSignIn;
+  const fileUpload = useSelector((state) => state.productFileUpload);
+  const {
+    loading: loadingUpload,
+    success: successUpload,
+    file_url,
+  } = fileUpload;
 
   const productUpdate = useSelector((state) => state.productUpdate);
-  const {
-    loading: loadingUpdate,
-    success: successUpdate,
-    error: errorUpdate,
-  } = productUpdate;
+  const { loading: loadingUpdate, success: successUpdate } = productUpdate;
   useEffect(() => {
     if (successUpdate) {
       navigate("/admin/product-list");
     }
+
     if (!product || product?._id !== productId || successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(productDetailsById(productId));
@@ -56,7 +55,21 @@ const ProductEditScreen = () => {
       setBrand(product.brand);
       setDescription(product.description);
     }
-  }, [dispatch, productId, product, navigate, successUpdate]);
+  }, [
+    dispatch,
+    productId,
+    product,
+    navigate,
+    successUpdate,
+    successUpload,
+    file_url,
+  ]);
+
+  useEffect(() => {
+    if (successUpload) {
+      setImage(file_url);
+    }
+  }, [file_url, successUpload]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -78,20 +91,9 @@ const ProductEditScreen = () => {
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    bodyFormData.append("image", file);
-    setLoadingUpload(true);
-    try {
-      const { data } = await axios.post("/api/uploads/", bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      });
-      setImage(data);
-      setLoadingUpload(false);
-    } catch (error) {
-      setErrorUpload(error.message);
-    }
+    bodyFormData.append("file", file);
+
+    dispatch(productFileUpload(bodyFormData));
   };
 
   return (
@@ -148,16 +150,13 @@ const ProductEditScreen = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="imageFile">
-            <Form.Label>Image File</Form.Label>
+            <Form.Label>Upload File</Form.Label>
             <Form.Control
               type="file"
               label="Choose Image"
               onChange={uploadFileHandler}
             />
-            {loadingUpload && <LoadingBox></LoadingBox>}
-            {errorUpload && (
-              <MessageBox variant="danger">{errorUpload}</MessageBox>
-            )}
+            {loadingUpload && <LoadingBox />}
           </Form.Group>
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
@@ -190,7 +189,7 @@ const ProductEditScreen = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
-            <Form.Label htmlFor="description">Description</Form.Label>
+            <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
               rows="3"

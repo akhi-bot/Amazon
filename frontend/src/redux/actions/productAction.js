@@ -14,6 +14,9 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_FILE_UPLOAD_FAIL,
+  PRODUCT_FILE_UPLOAD_REQUEST,
+  PRODUCT_FILE_UPLOAD_SUCCESS,
   PRODUCT_LIST_ADMIN_FAIL,
   PRODUCT_LIST_ADMIN_REQUEST,
   PRODUCT_LIST_ADMIN_SUCCESS,
@@ -166,3 +169,24 @@ export const productListAdmin = (page) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_LIST_ADMIN_FAIL, payload: getError(error) });
   }
 };
+
+export const productFileUpload =
+  (bodyFormData) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_FILE_UPLOAD_REQUEST });
+    const {
+      userSignIn: { userInfo },
+    } = getState();
+    try {
+      const { data } = await axios.post("/api/upload", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      toast.success("Image uploaded successfully");
+      dispatch({ type: PRODUCT_FILE_UPLOAD_SUCCESS, payload: data.secure_url });
+    } catch (error) {
+      toast.error(getError(error));
+      dispatch({ type: PRODUCT_FILE_UPLOAD_FAIL, payload: getError(error) });
+    }
+  };

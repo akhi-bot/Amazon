@@ -16,6 +16,7 @@ import {
   productCreateReducers,
   productDeleteReducer,
   productDetailsReducers,
+  productFileUploadReducer,
   productListAdminReducer,
   productListReducer,
   productSearchReducer,
@@ -60,6 +61,7 @@ const reducer = combineReducers({
   productCategories: productCategoriesReducer,
   productSearch: productSearchReducer,
   productListAdmin: productListAdminReducer,
+  productFileUpload: productFileUploadReducer,
   //cart reducers
   cart: cartReducers,
   // user reducers

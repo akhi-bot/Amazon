@@ -13,6 +13,9 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_FILE_UPLOAD_FAIL,
+  PRODUCT_FILE_UPLOAD_REQUEST,
+  PRODUCT_FILE_UPLOAD_SUCCESS,
   PRODUCT_LIST_ADMIN_FAIL,
   PRODUCT_LIST_ADMIN_REQUEST,
   PRODUCT_LIST_ADMIN_SUCCESS,
@@ -150,6 +153,23 @@ export const productListAdminReducer = (state = { loading: true }, action) => {
         page,
       };
     case PRODUCT_LIST_ADMIN_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productFileUploadReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_FILE_UPLOAD_REQUEST:
+      return { loading: true };
+    case PRODUCT_FILE_UPLOAD_SUCCESS:
+      return {
+        loading: false,
+        file_url: action.payload,
+        success: true,
+      };
+    case PRODUCT_FILE_UPLOAD_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
