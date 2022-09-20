@@ -32,11 +32,7 @@ const ProductListScreen = () => {
   } = productCreate;
 
   const productDelete = useSelector((state) => state.productDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = productDelete;
+  const { loading: loadingDelete, success: successDelete } = productDelete;
 
   useEffect(() => {
     if (successCreate) {
@@ -79,7 +75,6 @@ const ProductListScreen = () => {
         </Col>
       </Row>
       {loadingDelete && <LoadingBox></LoadingBox>}
-      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loadingCreate && <LoadingBox></LoadingBox>}
       {loading ? (
@@ -118,6 +113,7 @@ const ProductListScreen = () => {
                     >
                       Edit
                     </Button>
+                    &nbsp;
                     <Button
                       type="button"
                       variant="secondary"

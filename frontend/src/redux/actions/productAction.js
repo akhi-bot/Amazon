@@ -122,8 +122,10 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     await axios.delete(`/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
+    toast.success("product deleted successfully");
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: PRODUCT_DELETE_FAIL,
       payload: getError(error),
