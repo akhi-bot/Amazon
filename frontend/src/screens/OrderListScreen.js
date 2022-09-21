@@ -15,16 +15,13 @@ const OrderListScreen = () => {
   const { loading, error, orders } = orderList;
 
   const orderDelete = useSelector((state) => state.orderDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = orderDelete;
+  const { loading: loadingDelete, success: successDelete } = orderDelete;
   useEffect(() => {
     if (successDelete) {
       dispatch({ type: ORDER_DELETE_RESET });
+    } else {
+      dispatch(listOrders());
     }
-    dispatch(listOrders());
   }, [dispatch, successDelete]);
 
   const deleteHandler = (order) => {
@@ -37,7 +34,6 @@ const OrderListScreen = () => {
     <div>
       <h1>Orders</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
-      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -79,6 +75,7 @@ const OrderListScreen = () => {
                   >
                     Details
                   </Button>
+                  &nbsp;
                   <Button
                     type="button"
                     onClick={() => deleteHandler(order)}

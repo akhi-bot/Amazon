@@ -28,11 +28,7 @@ const OrderScreen = () => {
   const { success: successPay, loading: loadingPay } = orderPay;
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
-  const {
-    error: errorDeliver,
-    success: successDeliver,
-    loading: loadingDeliver,
-  } = orderDeliver;
+  const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
 
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
@@ -191,7 +187,6 @@ const OrderScreen = () => {
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  {/* <div className="d-grid"> */}
                   {!order.isPaid && (
                     <>
                       {!sdkReady ? (
@@ -207,21 +202,19 @@ const OrderScreen = () => {
                       )}
                     </>
                   )}
-                  {/* </div> */}
                 </ListGroup.Item>
                 {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                   <ListGroup.Item>
                     {loadingDeliver && <LoadingBox></LoadingBox>}
-                    {errorDeliver && (
-                      <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                    )}
-                    <Button
-                      type="button"
-                      className="primary block"
-                      onClick={deliverHandler}
-                    >
-                      Deliver Order
-                    </Button>
+                    <div className="d-grid">
+                      <Button
+                        type="button"
+                        className="primary block"
+                        onClick={deliverHandler}
+                      >
+                        Deliver Order
+                      </Button>
+                    </div>
                   </ListGroup.Item>
                 )}
               </ListGroup>

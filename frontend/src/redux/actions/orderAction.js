@@ -37,7 +37,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const {
       userSignIn: { userInfo },
     } = getState();
-    console.log(order);
     const { data } = await axios.post("/api/orders", order, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -146,7 +145,10 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_DELETE_SUCCESS });
+    toast.success("Order deleted successfully");
   } catch (error) {
+    toast.error(getError(error));
+
     dispatch({
       type: ORDER_DELETE_FAIL,
       payload: getError(error),
@@ -169,7 +171,9 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
       }
     );
     dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+    toast.success("Order Delivered Successfully");
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: ORDER_DELIVER_FAIL,
       payload: getError(error),
