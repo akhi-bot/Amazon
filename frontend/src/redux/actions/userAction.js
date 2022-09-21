@@ -104,7 +104,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
-    toast.success("User updated successfully");
+    toast.success("profile updated successfully");
   } catch (error) {
     toast.error(getError(error));
     dispatch({
@@ -142,7 +142,9 @@ export const updateUser = (user) => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+    toast.success("User updated successfully");
   } catch (error) {
+    toast.error(getError(error));
     dispatch({
       type: USER_UPDATE_FAILURE,
       payload: getError(error),

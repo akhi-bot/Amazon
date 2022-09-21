@@ -60,12 +60,14 @@ userRouter.post(
 
 userRouter.get(
   "/:id",
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({ message: "user Not Found" });
+      res.status(404).send({ message: "User Not Found" });
     }
   })
 );
@@ -115,10 +117,10 @@ userRouter.put(
     const user = await User.findById(req.params.id);
     const { name, email, isSeller, isAdmin } = req.body;
     if (user) {
-      user.name = name;
-      user.email = email;
-      user.isSeller = isSeller;
-      user.isAdmin = isAdmin;
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.isSeller = Boolean(isSeller);
+      user.isAdmin = Boolean(isAdmin);
       const updateUser = await user.save();
       res.send({ message: "User Updated", user: updateUser });
     } else {

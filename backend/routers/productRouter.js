@@ -54,14 +54,14 @@ productRouter.put(
         countInStock,
         description,
       } = req.body;
-      product.name = name;
-      product.slug = slug;
-      product.price = price;
-      product.image = image;
-      product.category = category;
-      product.brand = brand;
-      product.countInStock = countInStock;
-      product.description = description;
+      product.name = name || product.name;
+      product.slug = slug || product.slug;
+      product.price = price || product.price;
+      product.image = image || product.image;
+      product.category = category || product.category;
+      product.brand = brand || product.brand;
+      product.countInStock = countInStock || product.countInStock;
+      product.description = description || product.description;
 
       const updatedProduct = await product.save();
       res.send({

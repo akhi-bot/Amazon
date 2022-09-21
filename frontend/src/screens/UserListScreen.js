@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Button } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "../../node_modules/react-router-dom/index";
@@ -20,8 +22,11 @@ const UserListScreen = () => {
     success: successDelete,
   } = userDelete;
   useEffect(() => {
-    dispatch({ type: USER_DETAILS_RESET });
-    dispatch(listUser());
+    if (successDelete) {
+      dispatch({ type: USER_DETAILS_RESET });
+    } else {
+      dispatch(listUser());
+    }
   }, [dispatch, successDelete]);
 
   const editHandler = (user) => {
@@ -34,6 +39,9 @@ const UserListScreen = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Users</title>
+      </Helmet>
       <h1>Users</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -65,24 +73,27 @@ const UserListScreen = () => {
                 <td>{user.isSeller ? "Yes" : "No"}</td>
                 <td>{user.isAdmin ? "Yes" : "No"}</td>
                 <td>
-                  <button
+                  <Button
                     type="button"
-                    className="small"
+                    size="sm"
+                    variant="secondary"
                     onClick={() => {
                       editHandler(user);
                     }}
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  &nbsp;
+                  <Button
                     type="button"
-                    className="small"
+                    size="sm"
+                    variant="secondary"
                     onClick={() => {
                       deleteHandler(user);
                     }}
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
