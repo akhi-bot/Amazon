@@ -7,7 +7,10 @@ import { useNavigate } from "../../node_modules/react-router-dom/index";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { deleteUser, listUser } from "../redux/actions/userAction";
-import { USER_DETAILS_RESET } from "../redux/constants/userConstants";
+import {
+  USER_DELETE_RESET,
+  USER_DETAILS_RESET,
+} from "../redux/constants/userConstants";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -16,14 +19,10 @@ const UserListScreen = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, user } = userList;
   const userDelete = useSelector((state) => state.userDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = userDelete;
+  const { loading: loadingDelete, success: successDelete } = userDelete;
   useEffect(() => {
     if (successDelete) {
-      dispatch({ type: USER_DETAILS_RESET });
+      dispatch({ type: USER_DELETE_RESET });
     } else {
       dispatch(listUser());
     }
@@ -33,7 +32,7 @@ const UserListScreen = () => {
     navigate(`/admin/user/${user._id}/edit`);
   };
   const deleteHandler = (user) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteUser(user._id));
     }
   };
@@ -44,10 +43,6 @@ const UserListScreen = () => {
       </Helmet>
       <h1>Users</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
-      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
-      {successDelete && (
-        <MessageBox variant="success">{"User Deleted Successfully"}</MessageBox>
-      )}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

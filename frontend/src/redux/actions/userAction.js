@@ -162,10 +162,10 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     const { data } = await axios.delete(`/api/users/${userId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log(data);
     dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+    toast.success("user deleted successfully");
   } catch (error) {
-    console.log({ error });
+    toast.error(getError(error));
     dispatch({
       type: USER_DELETE_FAIL,
       payload: getError(error),

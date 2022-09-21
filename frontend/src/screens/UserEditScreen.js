@@ -23,11 +23,7 @@ const UserEditScreen = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = userUpdate;
+  const { loading: loadingUpdate, success: successUpdate } = userUpdate;
 
   useEffect(() => {
     if (successUpdate) {
@@ -36,7 +32,6 @@ const UserEditScreen = () => {
       navigate("/admin/user-list");
     }
     if (!user?.name || userId !== user?._id) {
-      console.log(userId);
       dispatch(detailsUser(userId));
     } else {
       setName(user?.name);
@@ -57,7 +52,6 @@ const UserEditScreen = () => {
       </Helmet>
       <h1>Edit User {userId}</h1>
 
-      {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
